@@ -864,10 +864,10 @@ header h2 {
 .nft-cards {
   display: grid;
   grid-template: auto/repeat(4, 1fr);
-  margin: 30px 20px;
-  margin-right: 30px;
+  margin: 30px 10px;
+  /* margin-right: 30px; */
   gap: 20px;
-  width: 90%;
+  width: 70%;
   color: black;
 }
 
