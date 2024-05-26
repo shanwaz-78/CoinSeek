@@ -16,9 +16,8 @@ function TrendingNFT(props) {
 
 
         <div className='nft-card' key={id}>
-            <div style={{width:'250px'}}>
+            
             <img src={imgUrl} alt="" width="100%" />
-            </div>
             <Link style={styling} to={`/nft/market/${id}`}> <h3>{title}</h3></Link>
             <div className='nft-creator-info'>
 

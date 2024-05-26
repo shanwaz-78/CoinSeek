@@ -43,14 +43,15 @@ const CryptoContext = ({ children }) => {
     })
   }, [])
 
+  
   React.useEffect(() => {
-    if (user) {
+    try{
+      if (user) {
       const coinRef = doc(db, user?.uid, 'watchlist');
-      var unSubscribe = onSnapshot(coinRef, (coin,nft) => {
+      var unSubscribe = onSnapshot(coinRef, (coin) => {
         if (coin.exists()) {
-          console.log(coin.data().coins)
-          setNftWatchlist(coin.data().nfts)
-          setWatchList(coin.data().coins)
+          setNftWatchlist(coin.data().nfts || [])
+          setWatchList(coin.data().coins || [])
         } else {
           console.log('no item in watchList');
         }
@@ -60,7 +61,12 @@ const CryptoContext = ({ children }) => {
         unSubscribe();
       }
     }
+    }catch(error){
+      console.log(error)
+    }
+   
   }, [user])
+
 
   React.useEffect(() => {
     if (user) {

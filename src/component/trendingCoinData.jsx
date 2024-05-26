@@ -38,8 +38,8 @@ export default function TrendingCoinData() {
 
 
   React.useEffect(() => {
-    fetchTrendingCoins();
-
+    
+      fetchTrendingCoins();
 
   }, [currency])
 

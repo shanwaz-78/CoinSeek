@@ -20,9 +20,9 @@ export default function cryptoDetail() {
     const [fiatCurrency, SetFiatCurrency] = React.useState('inr')
     const coinCurrentPrice = coin?.market_data.current_price[fiatCurrency]
     const date = new Date()
-    const inWatchlist = watchlist.includes(coin?.id)
+    const inWatchlist = watchlist && watchlist?.includes(coin?.id)
     const serverTimeStamp = serverTimestamp()
-
+   
     const transactionData = {
         'SelectedCoin': id,
         'selectedCurrency': fiatCurrency,
@@ -45,7 +45,10 @@ export default function cryptoDetail() {
 
 
     React.useEffect(() => {
+    try{
         fetchCoinData()
+    }catch(error){
+        console.log(error)}
     }, [currency])
 
     const addToWatchlist = async () => {
@@ -200,7 +203,7 @@ export default function cryptoDetail() {
                                     <h4>{coin?.name}</h4>
                                 </label>
                                 <div className='sellDiv'>
-                                    <button  className='buybutton' onClick={buyHandle}>Buy</button>
+                                    <button className='buybutton' onClick={buyHandle}>Buy</button>
                                     <button className='sellbutton' onClick={sellHandle}>Sell</button>
                                 </div>
 

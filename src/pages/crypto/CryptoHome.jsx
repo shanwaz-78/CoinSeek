@@ -39,7 +39,10 @@ export default function CryptoHome() {
 
 
   React.useEffect(() => {
-    fetchTrendingCoins();
+    try{
+      fetchTrendingCoins();
+    }catch(error){
+      console.log(error)}
 
 
   }, [currency])
@@ -54,30 +57,7 @@ export default function CryptoHome() {
     );
   };
 
-  // const coinlist = searchedCoin().slice((page - 1) * 10, (page + 1) * 10 + 10).map(coin => {
-  //   return (
-  //     <Link className='coin-info-card coin-card' key={coin.id} to={`/crypto/${coin.id}`}>
-  //       <div className="coin-info-head">
-  //         <div className='coin-name-img'>
-  //           <img src={coin.image} alt="" width={50} />
-  //           <div className='coin-name'>
-  //             <h3>{coin.symbol.toUpperCase()}</h3>
-  //             <h5>{coin.name}</h5>
-  //           </div>
-  //         </div>
-  //         <div className='coin-high-percentage'>
-  //           <p>price change in 24h</p>
-  //           <h3 style={coin.price_change_24h >= 0 ? positiveStyle : negetiveStyle}>{Intl.NumberFormat("en-US", options).format(coin.price_change_24h)} {symbol}</h3>
-  //           <h5 style={coin.price_change_24h >= 0 ? positiveStyle : negetiveStyle}>{coin.price_change_percentage_24h.toFixed(2)} %</h5>
-  //         </div>
-  //       </div>
-  //       <div className="coin-price">
-  //         <p>current price</p>
-  //         <h2>{Intl.NumberFormat("en-US", options).format(coin.current_price)} {symbol}</h2>
-  //       </div>
-  //     </Link>
-  //   )
-  // })
+ 
 
   return (
     <>

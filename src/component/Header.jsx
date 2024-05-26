@@ -57,7 +57,7 @@ export default function Header(props) {
                         <button className='logout-button' onClick={logOutEvent}>LogOut</button>
                     </NavLink>
                     :
-                    <button className='sign-in-button'>  <Link to='/logIn' className='nav-hide '>SignIn</Link></button>
+                    <button className='sign-in-button nav-hide '>  <Link to='/logIn' >SignIn</Link></button>
                 }
             </div>
 
