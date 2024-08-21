@@ -23,7 +23,6 @@ export default function CoinSlider() {
         const response = await fetch(TrendingCoins(currency));
         const data = await response.json()
 
-        // console.log(data)
         setCoins(data)
     }
 
@@ -71,7 +70,6 @@ export default function CoinSlider() {
         )
     })
 
-    console.log(coins);
 
     const responsive = {
         0: {

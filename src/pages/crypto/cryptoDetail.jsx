@@ -22,7 +22,7 @@ export default function cryptoDetail() {
     const date = new Date()
     const inWatchlist = watchlist && watchlist?.includes(coin?.id)
     const serverTimeStamp = serverTimestamp()
-   
+
     const transactionData = {
         'SelectedCoin': id,
         'selectedCurrency': fiatCurrency,
@@ -45,10 +45,11 @@ export default function cryptoDetail() {
 
 
     React.useEffect(() => {
-    try{
-        fetchCoinData()
-    }catch(error){
-        console.log(error)}
+        try {
+            fetchCoinData()
+        } catch (error) {
+            console.log(error)
+        }
     }, [currency])
 
     const addToWatchlist = async () => {
@@ -85,6 +86,7 @@ export default function cryptoDetail() {
 
         } catch (error) {
             alert(error)
+            console.log(error)
         }
     };
 
@@ -95,6 +97,7 @@ export default function cryptoDetail() {
                 { transactions: transactionArray ? [...transactionArray, { ...transactionData, paymentType: 'buy' }] : { ...transactionData, paymentType: 'buy' } },
                 { merge: true }
             );
+            alert(`congrates! you have bought ${Intl.NumberFormat("en-US", options).format(cryptocurrencyValue) + " " + id} coins in ${fiatcurrencyValue + " " + fiatCurrency} `)
 
         } catch (error) {
             alert(error)

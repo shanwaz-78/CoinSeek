@@ -22,7 +22,7 @@ export default function Transaction() {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
+        setRowsPerPage(event.target.value);
         setPage(0);
     };
 
@@ -34,9 +34,9 @@ export default function Transaction() {
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead >
                         <TableRow >
-                            {['Date', 'CryptoCoin', 'quentity', 'ExchangeCurrency', 'Amount', 'time'].map((column) => (
+                            {['Date', 'CryptoCoin', 'quentity', 'ExchangeCurrency', 'Amount', 'time'].map((column,index) => (
                                 <TableCell
-                                    key={a + 1}
+                                    key={index}
                                     //   align={column.align}
                                     //   style={{ minWidth: column.minWidth }}
                                     style={{ backgroundColor: 'rgba(89, 89, 89, 0.3)' }}
@@ -47,15 +47,15 @@ export default function Transaction() {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {transactionArray.map(t => (
+                        {Array.isArray(transactionArray) && transactionArray.map((t,index) => (
                             <>
-                                <TableRow key={a + 1}>
-                                    <TableCell >{t.date}</TableCell>
-                                    <TableCell>{t.SelectedCoin}</TableCell>
-                                    <TableCell>{Intl.NumberFormat("en-US", options).format(t.coinAmount)}</TableCell>
-                                    <TableCell>{t.selectedCurrency}</TableCell>
-                                    <TableCell style={{ display: 'flex', alignItems: 'center' }}><img src={t.paymentType === 'buy' ? '/up-arrow.png' : '/down-arrow.png'} alt="" width={40} /> {Intl.NumberFormat("en-US", options).format(t.currencyAmount)}</TableCell>
-                                    <TableCell>{t.time}</TableCell>
+                                <TableRow key={index}>
+                                    <TableCell >{t?.date}</TableCell>
+                                    <TableCell>{t?.SelectedCoin}</TableCell>
+                                    <TableCell>{Intl.NumberFormat("en-US", options).format(t?.coinAmount)}</TableCell>
+                                    <TableCell>{t?.selectedCurrency}</TableCell>
+                                    <TableCell style={{ display: 'flex', alignItems: 'center' }}><img src={t?.paymentType === 'buy' ? '/up-arrow.png' : '/down-arrow.png'} alt="" width={40} /> {Intl.NumberFormat("en-US", options).format(t.currencyAmount)}</TableCell>
+                                    <TableCell>{t?.time}</TableCell>
 
                                 </TableRow>
                             </>
@@ -67,7 +67,7 @@ export default function Transaction() {
             <TablePagination
                 rowsPerPageOptions={[5,10, 25, 100]}
                 component="div"
-                count={transactionArray.length}
+                count={transactionArray?.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

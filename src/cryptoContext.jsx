@@ -16,9 +16,8 @@ const CryptoContext = ({ children }) => {
   const [loading, setLoading] = React.useState(false)
   const [watchlist, setWatchList] = React.useState([])
   const [nftWatchlist, setNftWatchlist] = React.useState([])
-  const [transactionArray , setTransactionArray] = React.useState([])
-  const [positiveTransaction ,setPositiveTransaction] = React.useState(true)
-  const [messageArray,setMessageArray] =React.useState([])
+  const [transactionArray, setTransactionArray] = React.useState([])
+  const [messageArray, setMessageArray] = React.useState([])
 
 
   const fetchTrendingCoins = async () => {
@@ -43,46 +42,57 @@ const CryptoContext = ({ children }) => {
     })
   }, [])
 
-  
-  React.useEffect(() => {
-    try{
-      if (user) {
-      const coinRef = doc(db, user?.uid, 'watchlist');
-      var unSubscribe = onSnapshot(coinRef, (coin) => {
-        if (coin.exists()) {
-          setNftWatchlist(coin.data().nfts || [])
-          setWatchList(coin.data().coins || [])
-        } else {
-          console.log('no item in watchList');
-        }
-      })
 
-      return () => {
-        unSubscribe();
+  React.useEffect(() => {
+    try {
+      if (user) {
+        const coinRef = doc(db, user?.uid, 'watchlist');
+        var unSubscribe = onSnapshot(coinRef, (coin) => {
+          if (coin.exists()) {
+            setNftWatchlist(coin.data().nfts || [])
+            setWatchList(coin.data().coins || [])
+          } else {
+            console.log('no item in watchList');
+          }
+        })
+
+        return () => {
+          unSubscribe();
+        }
       }
-    }
-    }catch(error){
+    } catch (error) {
       console.log(error)
     }
-   
+
   }, [user])
 
 
   React.useEffect(() => {
-    if (user) {
-      const transactionRef = doc(db, user?.uid, 'transactions');
-      var unSubscribe = onSnapshot(transactionRef, (t) => {
-        if (t.exists()) {
-         console.log(t.data().transactions)
-          setTransactionArray(t.data().transactions)
-        } else {
-          console.log('no item in transacttion');
-        }
-      })
+    try {
+      if (user) {
+        const transactionRef = doc(db, user?.uid, 'transactions');
+        var unSubscribe = onSnapshot(transactionRef, (t) => {
+          if (t.exists()) {
+            const transactionsData = t.data().transactions;
+            if (Array.isArray(transactionsData)) {
+              setTransactionArray(transactionsData);
+            } else {
+              // Handle cases where transactionsData is not an array
+              console.warn('Transactions field is not an array:', transactionsData);
+              setTransactionArray([]); // Default to an empty array
+            }
+          } else {
+            console.log('No transactions found.');
+            setTransactionArray([]); // Ensure an empty array if no transactions
+          }
+        });
 
-      return () => {
-        unSubscribe();
+        return () => {
+          unSubscribe();
+        };
       }
+    } catch (error) {
+      console.log(error)
     }
   }, [user])
 
@@ -91,8 +101,8 @@ const CryptoContext = ({ children }) => {
       const messagesRef = doc(db, user?.uid, 'Messages');
       var unSubscribe = onSnapshot(messagesRef, (m) => {
         if (m.exists()) {
-         console.log(m.data().messages)
-          setMessageArray(m.data().messages)
+          console.log(m.data().messages)
+          setMessageArray(m.data().messages || [])
         } else {
           console.log('there is no message currently');
         }
@@ -111,7 +121,7 @@ const CryptoContext = ({ children }) => {
   }, [currency]);
 
   return (
-    <Crypto.Provider value={{ currency, setCurrency, symbol, user, loading, coins, watchlist,nftWatchlist,transactionArray,messageArray }}>
+    <Crypto.Provider value={{ currency, setCurrency, symbol, user, loading, coins, watchlist, nftWatchlist, transactionArray, messageArray }}>
       {children}
     </Crypto.Provider>
   );
