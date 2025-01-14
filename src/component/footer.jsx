@@ -44,7 +44,6 @@ export default function Footer() {
           <Link>Prime API</Link>
         </div>
       </div>
-      <p>Copyrights 2022, Developed by Asif Khan. @Asif's Tech  All Rights Reserved.</p>
     </div>
   )
 }
